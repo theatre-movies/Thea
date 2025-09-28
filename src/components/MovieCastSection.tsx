@@ -17,7 +17,6 @@ const MovieCastSection = ({
   title: string;
   actors: any;
 }) => {
-  const router = useRouter();
   return (
     <>
       <h1 className="text-2xl font-bold text-neutral-300 flex justify-start pl-4 tracking-tight">

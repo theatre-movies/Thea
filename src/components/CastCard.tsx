@@ -17,7 +17,7 @@ export function CastCard({ actor }) {
       >
         <Image
           src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}
-          alt={actor.title}
+          alt={actor.title || "Actor Image"}
           width={300}
           height={450}
           className="object-cover transition-all duration-300 ease-out rounded-lg"
