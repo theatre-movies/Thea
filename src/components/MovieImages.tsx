@@ -80,6 +80,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
+import { motion } from "motion/react";
 
 const MovieImages = ({ images }) => {
   const backdrops = images?.backdrops || [];
@@ -116,7 +117,13 @@ const MovieImages = ({ images }) => {
   return (
     <div className="fixed inset-0 overflow-hidden">
       {backdrops.map((image, index) => (
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{
+            opacity: index === currentIndex ? 1 : 0,
+            scale: index === currentIndex ? 1 : 0.80,
+          }}
+          transition={{ duration: 0.8 }}
           key={index}
           className={`absolute inset-0 -top-32 transition-opacity duration-1000 ease-in-out ${
             index === currentIndex ? "opacity-100" : "opacity-0"
@@ -131,7 +138,7 @@ const MovieImages = ({ images }) => {
           />
           {/* Gradient overlay for better text readability */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black" />
-        </div>
+        </motion.div>
       ))}
     </div>
   );

@@ -14,9 +14,12 @@ const MoviesSection = ({ movies, title }) => {
   const router = useRouter();
   return (
     <>
-      <h1 className="text-2xl font-bold text-neutral-300 flex justify-start pl-4 tracking-tight">
-        {title}
-      </h1>
+      {title && (
+        <h1 className="text-2xl font-bold text-neutral-300 flex justify-start pl-4 tracking-tight">
+          {title}
+        </h1>
+      )}
+
       <Carousel>
         <CarouselContent className="p-4">
           {movies?.results?.map((movie: any, index: number) => (
