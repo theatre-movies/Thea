@@ -10,10 +10,12 @@ import getSImilarMovies from "@/app/hooks/getSimilarMovies";
 import MovieCastSection from "@/components/MovieCastSection";
 import MovieImages from "@/components/MovieImages";
 import MoviesSection from "@/components/MoviesSection";
+import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import VideosAndTrailersSection from "@/components/VIdeosAndTrailersSection";
-import { Calendar, Clock, Play, Star, Video } from "lucide-react";
+import { Calendar, Clock, Play, Puzzle, Star, Video } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 const Page = () => {
@@ -59,6 +61,8 @@ const Page = () => {
           id: id as string,
         });
         setRecommendedMovies(fetchRecommendedMovies);
+
+        console.log(topLogo);
       } catch (error) {
         console.error("Error fetching movie data:", error);
       }
@@ -78,8 +82,16 @@ const Page = () => {
     );
   }
 
+  const topLogo =
+    images?.logos && images?.logos?.length > 0
+      ? [...images.logos]
+          .filter((logo) => logo.iso_639_1 === "en")
+          .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0))[0]
+      : null;
+
   return (
     <div className="relative min-h-screen bg-black">
+      <Navbar />
       {/* Background Images */}
       <div className="fixed inset-0 z-0">
         <MovieImages images={images} />
@@ -108,18 +120,21 @@ const Page = () => {
               <Video className="size-5" />
               <p>Watch Trailer</p>
             </Button>
-            <Button variant={"secondary"} className="h-10 w-[90%]">
-              <Play className="size-5" />
-              <p>Watch Now</p>
-            </Button>
+            <Link href={`/movie/watch/${id}`}>
+              <Button variant={"secondary"} className="h-10 w-[90%] ">
+                <Play className="size-5" />
+                <p>Watch Now</p>
+              </Button>
+            </Link>
           </div>
 
           {/* Movie Details */}
           <div className="space-y-4 flex flex-col justify-start text-neutral-400">
             {/* Movie Logo */}
+
             {images?.logos?.[0]?.file_path && (
               <Image
-                src={`https://image.tmdb.org/t/p/original/${images.logos[4].file_path}`}
+                src={`https://image.tmdb.org/t/p/original/${topLogo?.file_path}`}
                 width={130}
                 height={130}
                 alt={"Movie Logo"}
@@ -222,18 +237,23 @@ const Page = () => {
           )}
 
           {/* Similar Movies Section */}
-          {similarMovies && (
+          {similarMovies?.total_results > 0 && (
             <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 mb-8">
-              <MoviesSection movies={similarMovies} title={"Similar Movies"} />
+              <MoviesSection
+                movies={similarMovies}
+                title={"Similar Movies"}
+                logo={<Puzzle className="size-5 text-neutral-200 " />}
+              />
             </div>
           )}
 
           {/* Recommendation Movies section */}
-          {recommendedMovies && (
+          {recommendedMovies?.total_results > 0 && (
             <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 mb-8">
               <MoviesSection
                 movies={recommendedMovies}
                 title={"Recommended Movies"}
+                logo={<Star className="size-5 text-neutral-200 " />}
               />
             </div>
           )}

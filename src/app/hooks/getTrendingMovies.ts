@@ -1,12 +1,11 @@
-import { token } from "@/app/lib/token";
-import axios from "axios";
-import { NextResponse } from "next/server";
+"use server";
 
-export async function GET() {
+import axios from "axios";
+import { token } from "../lib/token";
+
+export default async function getTrendingMovies() {
   const header = `Bearer ${token}`;
 
-  const now = new Date();
-  const day = now.getDate();
   const movies = await axios.get(
     `https://api.themoviedb.org/3/trending/all/day
 `,
@@ -19,5 +18,5 @@ export async function GET() {
 
   const result = movies.data;
 
-  return NextResponse.json({ result }); // Example response
+  return result;
 }

@@ -86,20 +86,18 @@ const Page = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-8 mx-4 ">
           {/* Movie Poster */}
           <div className="flex flex-col justify-center lg:justify-start space-y-4 ">
-            <div className="flex flex-col border border-neutral-800 rounded-md">
+            <div className="flex flex-col border border-neutral-800 rounded-md overflow-hidden">
               {movieDetails?.poster_path && (
-                <div className="relative rounded-lg overflow-hidden">
+                <div className="relative w-full aspect-[2/3]">
                   <Image
-                    src={`https://image.tmdb.org/t/p/original/${movieDetails.poster_path}`}
-                    width={320}
-                    height={450}
-                    alt={"Movie Poster"}
-                    onError={(e) => {
-                      console.error("Failed to load poster");
-                      e.currentTarget.style.display = "none";
-                    }}
+                    src={`https://image.tmdb.org/t/p/original/${movieDetails?.poster_path}`}
+                    alt="Movie Poster"
+                    fill
+                    sizes="(max-width: 640px) 100vw, 640px"
+                    className="object-cover"
+                    priority
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 </div>
               )}
               <div className="px-4 font-[550] flex flex-col space-y-1 text-neutral-300">
@@ -135,7 +133,6 @@ const Page = () => {
                 </div>
               </div>
             </div>
-
             <div className="border border-neutral-800 rounded-md w-full flex justify-center p-3">
               <h1 className="text-neutral-400 italic text-lg    ">
                 {'"'}
@@ -191,68 +188,90 @@ const Page = () => {
                     </h2>
                   </div>
                   <div className="mt-4 space-y-2 text-neutral-300">
-                    <div className="flex justify-between gap-2">
-                      <span className="text-neutral-400 text-sm">
-                        Release Date
-                      </span>
-                      <span className="text-sm font-bold text-neutral-300">
-                        {movieDetails?.release_date
-                          ? new Date(
-                              movieDetails.release_date
-                            ).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })
-                          : ""}
-                      </span>
-                    </div>
+                    {movieDetails?.release_date && (
+                      <div className="flex justify-between gap-2">
+                        <span className="text-neutral-400 text-sm">
+                          Release Date
+                        </span>
+                        <span className="text-sm font-bold text-neutral-300">
+                          {movieDetails?.release_date
+                            ? new Date(
+                                movieDetails.release_date
+                              ).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : ""}
+                        </span>
+                      </div>
+                    )}
+                    {movieDetails?.runtime && (
+                      <div className="flex justify-between gap-2">
+                        <span className=" text-neutral-400 text-sm">
+                          Runtime
+                        </span>
+                        <span className="text-sm font-bold text-neutral-300">
+                          {movieDetails?.runtime ? (
+                            <span className="text-sm">
+                              {Math.floor(movieDetails?.runtime / 60)}h{" "}
+                              {String(movieDetails?.runtime % 60).padStart(
+                                2,
+                                "0"
+                              )}
+                              m
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      </div>
+                    )}
 
-                    <div className="flex justify-between gap-2">
-                      <span className=" text-neutral-400 text-sm">Runtime</span>
-                      <span className="text-sm font-bold text-neutral-300">
-                        {movieDetails?.runtime ? (
-                          <span className="text-sm">
-                            {Math.floor(movieDetails?.runtime / 60)}h{" "}
-                            {movieDetails?.runtime % 60}m
-                          </span>
-                        ) : (
-                          ""
-                        )}
-                      </span>
-                    </div>
+                    {movieDetails?.original_language && (
+                      <div className="flex justify-between gap-2">
+                        <span className="text-neutral-400 text-sm">
+                          Language
+                        </span>
+                        <span className="text-sm font-bold text-neutral-300">
+                          {movieDetails?.original_language?.toUpperCase() ||
+                            "N/A"}
+                        </span>
+                      </div>
+                    )}
 
-                    <div className="flex justify-between gap-2">
-                      <span className="text-neutral-400 text-sm">Language</span>
-                      <span className="text-sm font-bold text-neutral-300">
-                        {movieDetails?.original_language?.toUpperCase() ||
-                          "N/A"}
-                      </span>
-                    </div>
+                    {movieDetails?.status && (
+                      <div className="flex justify-between gap-2">
+                        <span className="text-neutral-400">Status</span>
+                        <span className="text-sm font-bold text-neutral-300">
+                          {movieDetails?.status || "N/A"}
+                        </span>
+                      </div>
+                    )}
 
-                    <div className="flex justify-between gap-2">
-                      <span className="text-neutral-400">Status</span>
-                      <span className="text-sm font-bold text-neutral-300">
-                        {movieDetails?.status || "N/A"}
-                      </span>
-                    </div>
+                    {movieDetails?.budget > 0 && (
+                      <div className="flex justify-between gap-2">
+                        <span className="text-neutral-400 text-sm">Budget</span>
+                        <span className="text-sm font-bold text-neutral-300">
+                          {movieDetails?.budget
+                            ? `$${movieDetails.budget.toLocaleString()}`
+                            : "N/A"}
+                        </span>
+                      </div>
+                    )}
 
-                    <div className="flex justify-between gap-2">
-                      <span className="text-neutral-400 text-sm">Budget</span>
-                      <span className="text-sm font-bold text-neutral-300">
-                        {movieDetails?.budget
-                          ? `$${movieDetails.budget.toLocaleString()}`
-                          : "N/A"}
-                      </span>
-                    </div>
-                    <div className="flex justify-between gap-2">
-                      <span className="text-neutral-400 text-sm">Revenue</span>
-                      <span className="text-sm font-bold text-neutral-300">
-                        {movieDetails?.revenue
-                          ? `$${movieDetails.revenue.toLocaleString()}`
-                          : "N/A"}
-                      </span>
-                    </div>
+                    {movieDetails?.revenue > 0 && (
+                      <div className="flex justify-between gap-2">
+                        <span className="text-neutral-400 text-sm">
+                          Revenue
+                        </span>
+                        <span className="text-sm font-bold text-neutral-300">
+                          {movieDetails?.revenue
+                            ? `$${movieDetails.revenue.toLocaleString()}`
+                            : "N/A"}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 

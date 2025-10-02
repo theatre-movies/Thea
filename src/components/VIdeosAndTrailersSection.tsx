@@ -8,14 +8,20 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useRouter } from "next/navigation";
+import { YoutubeIcon } from "lucide-react";
 
 const VideosAndTrailersSection = ({ movies, title }) => {
   const router = useRouter();
   return (
     <>
-      <h1 className="text-2xl font-bold text-neutral-300 flex justify-start pl-4 tracking-tight">
-        {title}
-      </h1>
+      <div className="flex items-center gap-2 pl-4">
+        <YoutubeIcon className="size-10 fill-red-600 stroke-black" />
+        <div className="w-2 h-2 animate-pulse bg-neutral-200 rounded-full"></div>
+
+        <h1 className="text-2xl font-bold text-neutral-300 flex justify-start  tracking-tight">
+          {title}
+        </h1>
+      </div>
       <Carousel>
         <CarouselContent className="p-4">
           {movies?.results?.map((movie: any, index: number) => (

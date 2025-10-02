@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { useRouter } from "next/navigation";
 import { CastCard } from "./CastCard";
+import { User } from "lucide-react";
 
 const MovieCastSection = ({
   actors,
@@ -19,9 +20,13 @@ const MovieCastSection = ({
 }) => {
   return (
     <>
-      <h1 className="text-2xl font-bold text-neutral-300 flex justify-start pl-4 tracking-tight">
-        {title}
-      </h1>
+      <div className="flex items-center gap-2 pl-4">
+        <User className="size-8 fill-neutral-300 stroke-none " />
+        <div className="w-2 h-2 animate-pulse bg-neutral-200 rounded-full"></div>
+        <h1 className="text-2xl font-bold text-neutral-300 flex justify-start  tracking-tight">
+          {title}
+        </h1>
+      </div>
       <Carousel>
         <CarouselContent className="p-4">
           {actors?.cast?.map((actor: any, index: number) => (

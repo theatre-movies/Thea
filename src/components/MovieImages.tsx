@@ -1,82 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { Carousel, CarouselContent } from "./ui/carousel";
-// import Image from "next/image";
-
-// const MovieImages = ({ images }) => {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-//     }, 4000);
-
-//     return () => clearInterval(timer);
-//   }, [images.length]);
-
-//   return (
-//     <Carousel>
-//       <CarouselContent className="p-4">
-//         {images?.backdrops?.map((image, index: number) => (
-//           <Image
-//             key={index}
-//             src={`https://image.tmdb.org/t/p/original${image.file_path}`}
-//             alt={`Movie backdrop ${index + 1}`}
-//             width={780}
-//             height={439}
-//             className={`object-cover transition-opacity duration-1000 ${
-//               index === currentIndex ? "opacity-100" : "opacity-0"
-//             }`}
-//           />
-//         ))}
-//       </CarouselContent>
-//     </Carousel>
-//   );
-// };
-
-// export default MovieImages;
-
-// // "use client";
-// // import React, { useState, useEffect } from "react";
-// // import Image from "next/image";
-
-// // const MovieImages = ({ images }) => {
-// //   const [currentIndex, setCurrentIndex] = useState(0);
-
-// //   useEffect(() => {
-// //     if (images.length <= 1) return;
-
-// //     const timer = setInterval(() => {
-// //       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-// //     }, 4000); // Change image every 4 seconds
-
-// //     return () => clearInterval(timer);
-// //   }, [images.length]);
-
-// //   if (images.length === 0) {
-// //     return <div className="fixed inset-0 bg-black" />;
-// //   }
-
-// //   return (
-// //     <div className="fixed inset-0">
-// //       {images?.backdrops.map((image, index) => (
-// //         <Image
-// //           key={index}
-// //           src={`https://image.tmdb.org/t/p/original/${image.file_path}`}
-// //           alt={`Backdrop ${index}`}
-// //           fill
-// //           className={`object-cover transition-opacity duration-1000 ${
-// //             index === currentIndex ? "opacity-100" : "opacity-0"
-// //           }`}
-// //           priority={index === 0}
-// //         />
-// //       ))}
-// //       {/* Dark overlay */}
-// //       <div className="absolute inset-0 bg-black bg-opacity-40" />
-// //     </div>
-// //   );
-// // };
-
-// // export default MovieImages;
-
 "use client";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
@@ -121,9 +42,9 @@ const MovieImages = ({ images }) => {
           initial={{ opacity: 0, scale: 1 }}
           animate={{
             opacity: index === currentIndex ? 1 : 0,
-            scale: index === currentIndex ? 1 : 0.80,
+            scale: index === currentIndex ? 1 : 0.93,
           }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1.0 }}
           key={index}
           className={`absolute inset-0 -top-32 transition-opacity duration-1000 ease-in-out ${
             index === currentIndex ? "opacity-100" : "opacity-0"
