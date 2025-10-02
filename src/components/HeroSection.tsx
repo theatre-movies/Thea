@@ -14,7 +14,7 @@ import {
 import { HeroMovieCard } from "./HeroMovieCard";
 import { useEffect, useState } from "react";
 
-export default function HeroSection({ movies }: { movies: any }) {
+export default function HeroSection({ movies }: { movies: MediaResponse }) {
   const list = Array.isArray(movies) ? movies : movies?.results ?? [];
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -36,7 +36,7 @@ export default function HeroSection({ movies }: { movies: any }) {
       plugins={[Autoplay({ delay: 5000, stopOnInteraction: false })]}
     >
       <CarouselContent className="p-10">
-        {list.map((movie, index: number) => (
+        {list.map((movie: MediaItem, index: number) => (
           <CarouselItem key={movie.id} className="basis-full">
             <HeroMovieCard movie={movie} sequence={index} />
           </CarouselItem>

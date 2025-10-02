@@ -46,7 +46,7 @@ const Page = () => {
   const [server, setServer] = useState(sources[0].url(id));
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [movieDetails, setMovieDetails] = useState(null);
+  const [movieDetails, setMovieDetails] = useState<MovieDetails | undefined>();
   const [recommendedMovies, setRecommendedMovies] = useState(null);
 
   // Handle iframe loading state
@@ -117,12 +117,15 @@ const Page = () => {
                   </span>
                   {movieDetails?.runtime && <span>•</span>}
                   <span className="text-sm">
-                    {Math.floor(movieDetails?.runtime / 60)}h{" "}
-                    {movieDetails?.runtime % 60}m
+                    {movieDetails?.runtime !== undefined
+                      ? `${Math.floor(movieDetails.runtime / 60)}h ${
+                          movieDetails.runtime % 60
+                        }m`
+                      : ""}
                   </span>
                 </div>
                 <div className="pb-4">
-                  {movieDetails?.genres?.map((genre: any) => (
+                  {movieDetails?.genres?.map((genre: Genre) => (
                     <span
                       key={genre.id}
                       className="text-xs border px-2 py-1 rounded-full border-neutral-600 bg-neutral-800/50 mr-2"
@@ -249,29 +252,33 @@ const Page = () => {
                       </div>
                     )}
 
-                    {movieDetails?.budget > 0 && (
-                      <div className="flex justify-between gap-2">
-                        <span className="text-neutral-400 text-sm">Budget</span>
-                        <span className="text-sm font-bold text-neutral-300">
-                          {movieDetails?.budget
-                            ? `$${movieDetails.budget.toLocaleString()}`
-                            : "N/A"}
-                        </span>
-                      </div>
-                    )}
+                    {movieDetails?.budget !== undefined &&
+                      movieDetails.budget > 0 && (
+                        <div className="flex justify-between gap-2">
+                          <span className="text-neutral-400 text-sm">
+                            Budget
+                          </span>
+                          <span className="text-sm font-bold text-neutral-300">
+                            {movieDetails?.budget
+                              ? `$${movieDetails.budget.toLocaleString()}`
+                              : "N/A"}
+                          </span>
+                        </div>
+                      )}
 
-                    {movieDetails?.revenue > 0 && (
-                      <div className="flex justify-between gap-2">
-                        <span className="text-neutral-400 text-sm">
-                          Revenue
-                        </span>
-                        <span className="text-sm font-bold text-neutral-300">
-                          {movieDetails?.revenue
-                            ? `$${movieDetails.revenue.toLocaleString()}`
-                            : "N/A"}
-                        </span>
-                      </div>
-                    )}
+                    {movieDetails?.revenue !== undefined &&
+                      movieDetails?.revenue > 0 && (
+                        <div className="flex justify-between gap-2">
+                          <span className="text-neutral-400 text-sm">
+                            Revenue
+                          </span>
+                          <span className="text-sm font-bold text-neutral-300">
+                            {movieDetails?.revenue
+                              ? `$${movieDetails.revenue.toLocaleString()}`
+                              : "N/A"}
+                          </span>
+                        </div>
+                      )}
                   </div>
                 </div>
 
@@ -289,7 +296,7 @@ const Page = () => {
                       {movieDetails?.production_companies &&
                         movieDetails?.production_companies.length > 0 &&
                         movieDetails?.production_companies.map(
-                          (company: any) => (
+                          (company: ProductionCompany) => (
                             <Badge
                               key={company.id}
                               className="text-xs font-bold text-neutral-200 px-4 py-1"
@@ -304,7 +311,7 @@ const Page = () => {
                       {movieDetails?.production_countries &&
                         movieDetails?.production_countries.length > 0 &&
                         movieDetails?.production_countries.map(
-                          (country: any) => (
+                          (country: ProductionCountry) => (
                             <Badge
                               key={country.iso_3166_1}
                               className="text-xs font-bold text-neutral-200 px-4 py-1"
@@ -320,12 +327,12 @@ const Page = () => {
                       {movieDetails?.spoken_languages &&
                         movieDetails?.spoken_languages.length > 0 &&
                         movieDetails?.spoken_languages.map(
-                          (languauge: any, idx: number) => (
+                          (language: SpokenLanguage, idx: number) => (
                             <span
-                              key={languauge}
+                              key={language.iso_639_1}
                               className="text-xs font-[550] text-neutral-300 "
                             >
-                              {languauge?.english_name}
+                              {language?.english_name}
                               {idx <
                                 movieDetails?.spoken_languages.length - 1 &&
                                 ","}

@@ -5,21 +5,11 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, Plus, ThumbsUp, ChevronDown, Star, Info } from "lucide-react";
+import { Play, Star, Info } from "lucide-react";
 import Link from "next/link";
 
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  overview?: string;
-  release_date?: string;
-  vote_average?: number;
-  genre_ids?: number[];
-}
-
 interface MovieCardProps {
-  movie: Movie;
+  movie: TMDBMovie;
   className?: string;
 }
 

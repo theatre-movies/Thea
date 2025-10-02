@@ -8,22 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Play, Info, Star, Film, Tv } from "lucide-react";
 import { easeInOut, motion } from "framer-motion";
 
-type Movie = {
-  id: string | number;
-  title: string;
-  overview?: string;
-  release_date?: string;
-  vote_average?: number;
-  poster_path?: string;
-  backdrop_path?: string;
-};
-
 export function HeroMovieCard({
   movie,
   className = "",
   sequence,
 }: {
-  movie: Movie;
+  movie: MediaItem;
   className?: string;
   sequence?: number;
 }) {
@@ -53,7 +43,9 @@ export function HeroMovieCard({
     return `https://image.tmdb.org/t/p/original${path}`;
   };
 
-  const imageSrc = getImageUrl(movie?.backdrop_path || movie?.poster_path);
+  const imageSrc = getImageUrl(
+    movie?.backdrop_path ?? movie?.poster_path ?? undefined
+  );
 
   console.log("Image source:", imageSrc);
 

@@ -12,10 +12,18 @@ import HeroSection from "@/components/HeroSection";
 import { Navbar } from "@/components/Navbar";
 
 const Home = () => {
-  const [nowPlayingMovies, setNowPlayingMovies] = useState(null);
-  const [popularMovies, setPopularMovies] = useState(null);
-  const [topRatedMovies, setTopRatedMovies] = useState(null);
-  const [trendingMovies, setTrendingMovies] = useState(null);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<
+    TMDBMoviesResponse | undefined
+  >();
+  const [popularMovies, setPopularMovies] = useState<
+    TMDBMoviesResponse | undefined
+  >();
+  const [topRatedMovies, setTopRatedMovies] = useState<
+    TMDBMoviesResponse | undefined
+  >();
+  const [trendingMovies, setTrendingMovies] = useState<
+    MediaResponse | undefined
+  >();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

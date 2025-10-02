@@ -9,7 +9,15 @@ import {
 } from "@/components/ui/carousel";
 import { MovieCard } from "./MovieCard";
 
-const MoviesSection = ({ movies, title, logo }) => {
+const MoviesSection = ({
+  movies,
+  title,
+  logo,
+}: {
+  movies?: TMDBMoviesResponse;
+  title?: string;
+  logo?: React.ReactNode;
+}) => {
   return (
     <>
       {title && (
@@ -27,7 +35,7 @@ const MoviesSection = ({ movies, title, logo }) => {
       )}
       <Carousel>
         <CarouselContent className="p-4">
-          {movies?.results?.map((movie: any, index: number) => (
+          {movies?.results?.map((movie: TMDBMovie, index: number) => (
             <CarouselItem key={index} className=" md:basis-1/3 lg:basis-2/13">
               <MovieCard movie={movie} />
             </CarouselItem>

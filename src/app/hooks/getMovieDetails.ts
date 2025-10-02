@@ -1,7 +1,7 @@
 "use server";
 
 import axios from "axios";
-import { token } from "../lib/token";
+import { token } from "../../lib/token";
 
 export default async function getMovieDetails({ id }: { id: string }) {
   const header = `Bearer ${token}`;

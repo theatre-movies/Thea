@@ -18,16 +18,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
 const Page = () => {
   const params = useParams();
   const id = params.id;
-  const [movieDetails, setMovieDetails] = useState(null);
+  const [movieDetails, setMovieDetails] = useState<MovieDetails | undefined>();
   const [cast, setCast] = useState(null);
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState<Media | undefined>();
   const [videos, setVideos] = useState(null);
   const [providers, setProviders] = useState(null);
-  const [similarMovies, setSimilarMovies] = useState(null);
-  const [recommendedMovies, setRecommendedMovies] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState<
+    TMDBMoviesResponse | undefined
+  >();
+  const [recommendedMovies, setRecommendedMovies] = useState<
+    TMDBMoviesResponse | undefined
+  >();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -148,7 +153,9 @@ const Page = () => {
             {/* Tagline */}
             {movieDetails.tagline && (
               <h1 className="text-xl tracking-tight italic py-2 text-neutral-300">
-                "{movieDetails.tagline}"
+                {"'"}
+                {movieDetails.tagline}
+                {'"'}
               </h1>
             )}
 
@@ -182,7 +189,7 @@ const Page = () => {
             {/* Genres */}
             {movieDetails.genres && movieDetails.genres.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {movieDetails.genres.map((genre: any) => (
+                {movieDetails.genres.map((genre: Genre) => (
                   <span
                     key={genre.id}
                     className="text-sm border px-2 py-1 rounded-full border-neutral-600 bg-neutral-800/50"
@@ -237,26 +244,28 @@ const Page = () => {
           )}
 
           {/* Similar Movies Section */}
-          {similarMovies?.total_results > 0 && (
-            <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 mb-8">
-              <MoviesSection
-                movies={similarMovies}
-                title={"Similar Movies"}
-                logo={<Puzzle className="size-5 text-neutral-200 " />}
-              />
-            </div>
-          )}
+          {similarMovies?.total_results !== undefined &&
+            similarMovies.total_results > 0 && (
+              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 mb-8">
+                <MoviesSection
+                  movies={similarMovies}
+                  title={"Similar Movies"}
+                  logo={<Puzzle className="size-5 text-neutral-200 " />}
+                />
+              </div>
+            )}
 
           {/* Recommendation Movies section */}
-          {recommendedMovies?.total_results > 0 && (
-            <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 mb-8">
-              <MoviesSection
-                movies={recommendedMovies}
-                title={"Recommended Movies"}
-                logo={<Star className="size-5 text-neutral-200 " />}
-              />
-            </div>
-          )}
+          {recommendedMovies?.total_results !== undefined &&
+            recommendedMovies?.total_results > 0 && (
+              <div className="bg-black/40 backdrop-blur-sm rounded-lg p-6 mb-8">
+                <MoviesSection
+                  movies={recommendedMovies}
+                  title={"Recommended Movies"}
+                  logo={<Star className="size-5 text-neutral-200 " />}
+                />
+              </div>
+            )}
         </div>
       </div>
     </div>

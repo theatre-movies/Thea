@@ -4,7 +4,7 @@
 "use server";
 
 import axios from "axios";
-import { token } from "../lib/token";
+import { token } from "../../lib/token";
 
 interface SearchParams {
   query: string;
