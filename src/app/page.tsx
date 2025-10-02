@@ -5,7 +5,6 @@ import MoviesSection from "@/components/MoviesSection";
 import getNowPlayingMovies from "./hooks/getNowPlayingMovies";
 import getPopularMovies from "./hooks/getPopularMovies";
 import getTopRatedMovies from "./hooks/getTopRatedMovies";
-import { motion } from "motion/react";
 import { CirclePlay, LibraryBig, Loader2, TrendingUp } from "lucide-react";
 import getTrendingMovies from "./hooks/getTrendingMovies";
 import HeroSection from "@/components/HeroSection";

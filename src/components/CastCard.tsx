@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion } from "motion/react";
 
-export function CastCard({ actor }) {
+export function CastCard({ actor }: { actor: CastMember }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   return (
     <motion.div className="group relative transition-all duration-300 ease-out gap-x-2 border border-neutral-600 rounded-lg">
@@ -17,7 +17,7 @@ export function CastCard({ actor }) {
       >
         <Image
           src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}
-          alt={actor.title || "Actor Image"}
+          alt={actor?.name || "Actor Image"}
           width={300}
           height={450}
           className="object-cover transition-all duration-300 ease-out rounded-lg"

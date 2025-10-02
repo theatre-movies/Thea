@@ -7,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useRouter } from "next/navigation";
 import { CastCard } from "./CastCard";
 import { User } from "lucide-react";
 
@@ -16,7 +15,7 @@ const MovieCastSection = ({
   title,
 }: {
   title: string;
-  actors: any;
+  actors: MovieCredits;
 }) => {
   return (
     <>
@@ -29,7 +28,7 @@ const MovieCastSection = ({
       </div>
       <Carousel>
         <CarouselContent className="p-4">
-          {actors?.cast?.map((actor: any, index: number) => (
+          {actors?.cast?.map((actor: CastMember, index: number) => (
             <CarouselItem key={index} className=" md:basis-1/3 lg:basis-2/13">
               <CastCard actor={actor} />
             </CarouselItem>

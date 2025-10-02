@@ -14,7 +14,11 @@ import {
 import { HeroMovieCard } from "./HeroMovieCard";
 import { useEffect, useState } from "react";
 
-export default function HeroSection({ movies }: { movies: MediaResponse }) {
+export default function HeroSection({
+  movies,
+}: {
+  movies: MediaResponse | undefined;
+}) {
   const list = Array.isArray(movies) ? movies : movies?.results ?? [];
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);

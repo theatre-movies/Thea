@@ -106,6 +106,59 @@ interface Media {
   posters: Image[];
 }
 
+interface CastMember {
+  adult: boolean;
+  gender: number; // 0 (unknown), 1 (female), 2 (male)
+  id: number;
+  known_for_department: string; // e.g., "Acting"
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+interface CrewMember {
+  adult: boolean;
+  gender: number; // 0 (unknown), 1 (female), 2 (male)
+  id: number;
+  known_for_department: string; // e.g., "Directing", "Writing", etc.
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  credit_id: string;
+  department: string; // e.g., "Writing", "Directing", "Production"
+  job: string; // e.g., "Writer", "Director", "Producer"
+}
+
+interface MovieCredits {
+  id: number;
+  cast: CastMember[];
+  crew: CrewMember[];
+}
+
+interface Video {
+  iso_639_1: string; // Language code, e.g., "en"
+  iso_3166_1: string; // Country code, e.g., "US"
+  name: string; // Title of the video, e.g., "50th Anniversary Trailer"
+  key: string; // Video identifier for the platform, e.g., YouTube video ID
+  site: string; // Platform hosting the video, e.g., "YouTube"
+  size: number; // Resolution of the video, e.g., 480, 720, 1080, 2160
+  type: string; // Type of video, e.g., "Trailer", "Clip", "Featurette", "Behind the Scenes", "Teaser"
+  official: boolean; // Whether the video is official
+  published_at: string; // ISO 8601 timestamp, e.g., "2022-01-13T13:59:54.000Z"
+  id: string; // Unique identifier for the video
+}
+
+interface MovieVideos {
+  id: number; // Movie ID
+  results: Video[]; // Array of video objects
+}
+
 // For Hero section
 interface MediaItem {
   adult: boolean;

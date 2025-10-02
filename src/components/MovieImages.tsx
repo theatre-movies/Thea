@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 
-const MovieImages = ({ images }) => {
+const MovieImages = ({ images }: { images: Media | undefined }) => {
   const backdrops = images?.backdrops || [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -37,7 +37,7 @@ const MovieImages = ({ images }) => {
 
   return (
     <div className="fixed inset-0 overflow-hidden">
-      {backdrops.map((image, index) => (
+      {backdrops.map((image: Image, index: number) => (
         <motion.div
           initial={{ opacity: 0, scale: 1 }}
           animate={{

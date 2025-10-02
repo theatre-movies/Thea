@@ -10,7 +10,14 @@ import {
 import { useRouter } from "next/navigation";
 import { YoutubeIcon } from "lucide-react";
 
-const VideosAndTrailersSection = ({ movies, title }) => {
+interface VideosAndTrailersSectionProps {
+  movies: MovieVideos;
+  title?: string;
+}
+const VideosAndTrailersSection = ({
+  movies,
+  title,
+}: VideosAndTrailersSectionProps) => {
   const router = useRouter();
   return (
     <>
@@ -24,7 +31,7 @@ const VideosAndTrailersSection = ({ movies, title }) => {
       </div>
       <Carousel>
         <CarouselContent className="p-4">
-          {movies?.results?.map((movie: any, index: number) => (
+          {movies?.results?.map((movie: Video, index: number) => (
             <CarouselItem
               key={index}
               className="md:basis-1/3 lg:basis-1/4"

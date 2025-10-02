@@ -23,7 +23,7 @@ const Page = () => {
   const params = useParams();
   const id = params.id;
   const [movieDetails, setMovieDetails] = useState<MovieDetails | undefined>();
-  const [cast, setCast] = useState(null);
+  const [cast, setCast] = useState<MovieCredits | undefined>();
   const [images, setImages] = useState<Media | undefined>();
   const [videos, setVideos] = useState(null);
   const [providers, setProviders] = useState(null);
