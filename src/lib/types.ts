@@ -188,3 +188,50 @@ interface MediaResponse {
   total_pages: number;
   total_results: number;
 }
+
+interface searchMovies {
+  adult: boolean;
+  backdrop_path: string | null;
+  id: number;
+  title?: string; // For movies
+  name?: string; // For TV shows
+  original_title?: string; // For movies
+  original_name?: string; // For TV shows
+  overview: string | null;
+  poster_path: string | null;
+  media_type: "movie" | "tv" | "person"; // Union type for media types
+  original_language: string;
+  genre_ids: number[]; // Updated to number[] from empty array
+  popularity: number;
+  release_date?: string; // For movies
+  first_air_date?: string; // For TV shows
+  video?: boolean; // Only in movies
+  vote_average: number;
+  vote_count: number;
+  origin_country?: string[]; // Only in TV shows
+  gender?: number; // For 'person' media type
+  known_for_department?: string; // For 'person' media type
+  profile_path?: string | null; // For 'person' media type
+  known_for?: Array<{
+    adult: boolean;
+    backdrop_path: string | null;
+    id: number;
+    title: string;
+    original_title: string;
+    overview: string;
+    poster_path: string | null;
+    media_type: "movie";
+    original_language: string;
+    genre_ids: number[];
+    popularity: number;
+    release_date: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+  }>; // For 'person' media type
+}
+
+interface searchResponse {
+  page: number;
+  results: searchMovies[];
+}

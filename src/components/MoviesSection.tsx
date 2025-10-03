@@ -25,10 +25,10 @@ const MoviesSection = ({
           {logo && (
             <div className="flex items-center gap-2">
               <span className="">{logo}</span>
-              <div className="w-2 h-2 animate-pulse bg-neutral-200 rounded-full"></div>
+              <div className="sm:w-2 sm:h-2 w-1.5 h-1.5 animate-pulse bg-neutral-200 rounded-full"></div>
             </div>
           )}
-          <h1 className="text-2xl font-bold text-neutral-200 flex justify-start tracking-tight ">
+          <h1 className="sm:text-2xl text-xl font-bold text-neutral-200 flex justify-start tracking-tight ">
             {title}
           </h1>
         </div>
@@ -36,7 +36,10 @@ const MoviesSection = ({
       <Carousel>
         <CarouselContent className="p-4">
           {movies?.results?.map((movie: TMDBMovie, index: number) => (
-            <CarouselItem key={index} className=" md:basis-1/3 lg:basis-2/13">
+            <CarouselItem
+              key={index}
+              className=" md:basis-1/3 basis-1/2 lg:basis-2/13"
+            >
               <MovieCard movie={movie} />
             </CarouselItem>
           ))}

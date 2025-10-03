@@ -35,8 +35,38 @@ const MovieImages = ({ images }: { images: Media | undefined }) => {
     return <div className="fixed inset-0 bg-black animate-pulse" />;
   }
 
+  // return (
+  //   <div className="fixed inset-0 overflow-hidden">
+  //     {backdrops.map((image: Image, index: number) => (
+  //       <motion.div
+  //         initial={{ opacity: 0, scale: 1 }}
+  //         animate={{
+  //           opacity: index === currentIndex ? 1 : 0,
+  //           scale: index === currentIndex ? 1 : 0.93,
+  //         }}
+  //         transition={{ duration: 1.0 }}
+  //         key={index}
+  //         className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+  //           index === currentIndex ? "opacity-100" : "opacity-0"
+  //         }`}
+  //       >
+  //         <Image
+  //           src={`https://image.tmdb.org/t/p/original${image.file_path}`}
+  //           alt={`Movie backdrop ${index + 1}`}
+  //           className="w-full h-full object-cover"
+  //           fill
+  //           loading={index === 0 ? "eager" : "lazy"}
+  //         />
+  //         {/* Gradient overlay for better text readability */}
+  //       </motion.div>
+  //     ))}
+  //     <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black" />
+  //   </div>
+  // );
+  // In MovieImages.tsx
+  // In MovieImages.tsx
   return (
-    <div className="fixed inset-0 overflow-hidden">
+    <div className="absolute inset-x-0 top-0 h-[70vh] lg:h-[80vh] overflow-hidden">
       {backdrops.map((image: Image, index: number) => (
         <motion.div
           initial={{ opacity: 0, scale: 1 }}
@@ -46,7 +76,7 @@ const MovieImages = ({ images }: { images: Media | undefined }) => {
           }}
           transition={{ duration: 1.0 }}
           key={index}
-          className={`absolute inset-0 -top-32 transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
             index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -57,10 +87,10 @@ const MovieImages = ({ images }: { images: Media | undefined }) => {
             fill
             loading={index === 0 ? "eager" : "lazy"}
           />
-          {/* Gradient overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/70 to-black" />
         </motion.div>
       ))}
+      {/* Gradient fades to black at bottom */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black" />
     </div>
   );
 };

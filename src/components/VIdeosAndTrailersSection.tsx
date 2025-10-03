@@ -22,10 +22,10 @@ const VideosAndTrailersSection = ({
   return (
     <>
       <div className="flex items-center gap-2 pl-4">
-        <YoutubeIcon className="size-10 fill-red-600 stroke-black" />
+        <YoutubeIcon className="sm:size-10 size-5 fill-red-600 stroke-black" />
         <div className="w-2 h-2 animate-pulse bg-neutral-200 rounded-full"></div>
 
-        <h1 className="text-2xl font-bold text-neutral-300 flex justify-start  tracking-tight">
+        <h1 className="sm:text-2xl text-xl font-bold text-neutral-300 flex justify-start  tracking-tight">
           {title}
         </h1>
       </div>
@@ -34,7 +34,7 @@ const VideosAndTrailersSection = ({
           {movies?.results?.map((movie: Video, index: number) => (
             <CarouselItem
               key={index}
-              className="md:basis-1/3 lg:basis-1/4"
+              className="md:basis-1/3 basis-1/1 lg:basis-1/4"
               onClick={() => router.push(`/movie/${movie.id}`)}
             >
               <iframe

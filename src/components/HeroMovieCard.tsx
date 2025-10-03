@@ -67,7 +67,7 @@ export function HeroMovieCard({
                   delay: (sequence ?? 1) * 1,
                   ease: "easeInOut",
                 }} // Use string-based easing
-                className="absolute inset-0"
+                className="absolute inset-0 "
               >
                 <Image
                   src={imageSrc}
@@ -75,7 +75,7 @@ export function HeroMovieCard({
                   fill
                   priority
                   unoptimized
-                  className={`object-cover transition-opacity duration-300 ${
+                  className={`object-cover sm:object-center transition-opacity duration-300 ${
                     imageLoaded ? "opacity-100" : "opacity-0"
                   }`}
                   onLoad={() => setImageLoaded(true)}
@@ -105,33 +105,39 @@ export function HeroMovieCard({
           {/* Content */}
           <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 md:p-10">
             <div className="max-w-3xl space-y-3 md:space-y-4">
-              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+              <h2 className="text-xl md:text-5xl font-bold text-white tracking-tight">
                 {movie.title || movie?.name}
               </h2>
               <div className="flex items-center gap-3 text-white/90">
                 {typeof rating === "number" && (
                   <Badge className="bg-black/60 text-white h-6 gap-1 px-2">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm font-[550]">{rating}</span>
+                    <span className=" text-xs sm:text-sm font-[550]">
+                      {rating}
+                    </span>
                   </Badge>
                 )}
                 {movieYear && (
-                  <span className="text-sm font-[550]">{movieYear}</span>
+                  <span className="text-xs sm:text-sm font-[550]">
+                    {movieYear}
+                  </span>
                 )}
                 {showYear && (
-                  <span className="text-sm font-[550]">{showYear}</span>
+                  <span className="text-xs sm:text-sm font-[550]">
+                    {showYear}
+                  </span>
                 )}
 
                 {movie?.media_type === "movie" && (
-                  <div className="flex gap-x-2 items-center bg-black/60 p-2 rounded-md border border-neutral-700 ">
-                    <Film className="size-4  text-neutral-100 z-10" />
+                  <div className="flex gap-x-2 items-center bg-black/60 sm:p-2 p-1 rounded-md border border-neutral-700 ">
+                    <Film className="size-4   text-neutral-100 z-10" />
                     <span className="z-50 text-neutral-200 text-xs tracking-tight font-bold ">
                       Movie
                     </span>
                   </div>
                 )}
                 {movie?.media_type === "tv" && (
-                  <div className="flex gap-x-2 items-center bg-black/60 p-2 rounded-md border border-neutral-700 ">
+                  <div className="flex gap-x-2 items-center bg-black/60 sm:p-2 p-1 rounded-md border border-neutral-700 ">
                     <Tv className="size-4  text-neutral-100 z-10" />
                     <span className="z-50 text-neutral-200 text-xs tracking-tight font-bold ">
                       Tv Show
@@ -141,7 +147,7 @@ export function HeroMovieCard({
               </div>
 
               {movie.overview && (
-                <p className="text-neutral-300 tracking-tight text-pretty">
+                <p className="text-neutral-300 tracking-tight sm:text-pretty text-xs sm:text-lg">
                   {movie.overview}
                 </p>
               )}

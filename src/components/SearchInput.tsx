@@ -6,6 +6,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 type Movie = {
   poster_path?: string | null;
@@ -19,9 +20,9 @@ const DEBOUNCE_MS = 350;
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState<Movie[]>([]);
+  const [results, setResults] = useState<searchMovies[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const [cache, setCache] = useState<Record<string, Movie[]>>({});
+  const [cache, setCache] = useState<Record<string, searchMovies[]>>({});
 
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,7 +37,7 @@ const SearchInput = () => {
       setResults(cache[q]);
       return;
     }
-    const data = await getsearchMedia({ query: q });
+    const data = (await getsearchMedia({ query: q })) as searchResponse;
     const next = data?.results ?? [];
     setResults(next);
     setCache((prev) => ({ ...prev, [q]: next }));
@@ -95,17 +96,32 @@ const SearchInput = () => {
             className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto rounded-md border border-neutral-700 bg-neutral-950 p-2 shadow-lg z-50"
           >
             {results.length === 0 ? (
-              <div className="px-2 py-3 text-sm text-neutral-400">
+              <motion.div
+                initial={{ opacity: 0, filter: "blur(4px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+                className="px-2 py-3 text-sm text-neutral-400"
+              >
                 No results found.
-              </div>
+              </motion.div>
             ) : (
               <ul className="space-y-2">
                 {results.map((movie, idx) => (
-                  <li
+                  <Link
+                    href={`/movie/${movie?.id}`}
                     key={idx}
                     className="flex items-center justify-between border-b border-neutral-800/60 last:border-none pb-2"
                   >
-                    <div className="flex items-center gap-x-2">
+                    <motion.div
+                      className="flex items-center gap-x-2"
+                      initial={{ opacity: 0, x: 20, filter: "blur(3px)" }}
+                      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                      transition={{
+                        duration: 0.3,
+                        staggerChildren: 0.2 * idx,
+                        delay: idx * 0.3,
+                      }}
+                    >
                       {movie?.poster_path ? (
                         <Image
                           src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -122,15 +138,20 @@ const SearchInput = () => {
                       <h2 className="text-[15px] leading-5 font-semibold text-neutral-100 max-w-md">
                         {movie?.title || movie?.original_name}
                       </h2>
-                    </div>
+                    </motion.div>
                     {movie?.release_date ? (
-                      <span className="text-sm text-neutral-400">
+                      <motion.span
+                        className="text-sm text-neutral-400"
+                        initial={{ opacity: 0, x: 20, filter: "blur(3px)" }}
+                        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.3 }}
+                      >
                         {new Date(movie.release_date).getFullYear()}
-                      </span>
+                      </motion.span>
                     ) : (
                       <span className="text-sm text-neutral-600">-</span>
                     )}
-                  </li>
+                  </Link>
                 ))}
               </ul>
             )}

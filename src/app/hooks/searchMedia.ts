@@ -30,7 +30,7 @@ export async function getsearchMedia({ query, page = 1 }: SearchParams) {
         },
       }
     );
-
+    console.log("Searched Data", response.data);
     return response.data;
   } catch (error) {
     console.error("Error searching media:", error);

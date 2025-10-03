@@ -63,7 +63,7 @@ const Home = () => {
         <HeroSection movies={trendingMovies} />
       </div>
 
-      <div className="mx-20">
+      <div className="sm:mx-20">
         <MoviesSection
           movies={nowPlayingMovies}
           title={"Now Playing"}

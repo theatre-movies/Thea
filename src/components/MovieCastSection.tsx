@@ -20,16 +20,19 @@ const MovieCastSection = ({
   return (
     <>
       <div className="flex items-center gap-2 pl-4">
-        <User className="size-8 fill-neutral-300 stroke-none " />
+        <User className="sm:size-8 size-6 fill-neutral-300 stroke-none " />
         <div className="w-2 h-2 animate-pulse bg-neutral-200 rounded-full"></div>
-        <h1 className="text-2xl font-bold text-neutral-300 flex justify-start  tracking-tight">
+        <h1 className="sm:text-2xl text-xl font-bold text-neutral-300 flex justify-start  tracking-tight">
           {title}
         </h1>
       </div>
       <Carousel>
         <CarouselContent className="p-4">
           {actors?.cast?.map((actor: CastMember, index: number) => (
-            <CarouselItem key={index} className=" md:basis-1/3 lg:basis-2/13">
+            <CarouselItem
+              key={index}
+              className=" md:basis-1/3  basis-1/2 lg:basis-2/13"
+            >
               <CastCard actor={actor} />
             </CarouselItem>
           ))}

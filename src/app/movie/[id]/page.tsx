@@ -98,35 +98,45 @@ const Page = () => {
     <div className="relative min-h-screen bg-black">
       <Navbar />
       {/* Background Images */}
-      <div className="fixed inset-0 z-0">
+      {/* <div className="fixed inset-0 z-0 bg-black">
+        <MovieImages images={images} />
+      </div> */}
+
+      {/* Background Images - Hero Section Only */}
+      <div className="absolute inset-x-0 -top-4 z-0">
         <MovieImages images={images} />
       </div>
-
       {/* Main Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-8 mx-4 lg:mx-10 pt-20 lg:pt-96">
+        <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-8 mx-4 lg:mx-10 pt-20 lg:pt-96 ">
           {/* Movie Poster */}
-          <div className="flex flex-col justify-center lg:justify-start space-y-2">
+          <div className="flex flex-col justify-center lg:justify-start space-y-4  pb-8 border-b-2 rounded-md sm:border-0 sm:pb-0 sm:rounded-none border-neutral-300">
             {movieDetails?.poster_path && (
               <Image
                 src={`https://image.tmdb.org/t/p/original/${movieDetails.poster_path}`}
                 width={320}
                 height={450}
                 alt={"Movie Poster"}
-                className="rounded-lg border border-neutral-700"
+                className="rounded-lg border border-neutral-700 sm:mx-0 mx-9  "
                 onError={(e) => {
                   console.error("Failed to load poster");
                   e.currentTarget.style.display = "none";
                 }}
               />
             )}
-            <Button variant={"default"} className="h-10 w-[90%]">
+            <Button
+              variant={"default"}
+              className="h-10 w-[90%] flex justify-center sm:mx-0 mx-4 "
+            >
               <Video className="size-5" />
               <p>Watch Trailer</p>
             </Button>
             <Link href={`/movie/watch/${id}`}>
-              <Button variant={"secondary"} className="h-10 w-[90%] ">
+              <Button
+                variant={"secondary"}
+                className="h-10 w-[90%] sm:mx-0 mx-4"
+              >
                 <Play className="size-5" />
                 <p>Watch Now</p>
               </Button>
@@ -192,7 +202,7 @@ const Page = () => {
                 {movieDetails.genres.map((genre: Genre) => (
                   <span
                     key={genre.id}
-                    className="text-sm border px-2 py-1 rounded-full border-neutral-600 bg-neutral-800/50"
+                    className="text-sm border px-2 py-1 rounded-md text-neutral-400 border-neutral-600 bg-neutral-800/50"
                   >
                     {genre.name}
                   </span>
@@ -250,7 +260,9 @@ const Page = () => {
                 <MoviesSection
                   movies={similarMovies}
                   title={"Similar Movies"}
-                  logo={<Puzzle className="size-5 text-neutral-200 " />}
+                  logo={
+                    <Puzzle className="sm:size-5 size-4 text-neutral-200 " />
+                  }
                 />
               </div>
             )}
