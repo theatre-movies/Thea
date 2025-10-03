@@ -154,7 +154,7 @@ export function HeroMovieCard({
 
               <div className="flex items-center gap-3 pt-1">
                 <Button
-                  className="rounded-md bg-indigo-600 text-white hover:bg-indigo-500"
+                  className="rounded-md bg-neutral-100 text-black hover:bg-white"
                   size="lg"
                   onClick={(e) => {
                     e.preventDefault();

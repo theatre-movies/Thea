@@ -235,3 +235,26 @@ interface searchResponse {
   page: number;
   results: searchMovies[];
 }
+
+interface WatchProvider {
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
+  display_priority: number;
+}
+
+interface CountryProviders {
+  link: string;
+  flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
+  buy?: WatchProvider[];
+  ads?: WatchProvider[];
+  free?: WatchProvider[];
+}
+
+interface MovieProvidersResponse {
+  id: number;
+  results: {
+    [countryCode: string]: CountryProviders;
+  };
+}

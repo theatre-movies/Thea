@@ -64,7 +64,7 @@ const SearchInput = () => {
   const shouldShow = showResults && hasQuery;
 
   return (
-    <div ref={containerRef} className="relative w-80">
+    <div ref={containerRef} className="relative sm:w-80 w-60">
       <div className="flex justify-between border border-neutral-700 rounded-md">
         <input
           ref={inputRef}
@@ -73,7 +73,7 @@ const SearchInput = () => {
           onFocus={() => setShowResults(true)}
           onKeyDown={(e) => e.key === "Escape" && setShowResults(false)}
           placeholder="Find your sauce"
-          className="flex-1 outline-0 p-2 bg-neutral-950 text-neutral-200 placeholder:text-neutral-500 rounded-l-md"
+          className="flex-1 outline-0 sm:p-2  p-1 px-3 sm:text-sm text-xs bg-neutral-950 text-neutral-200 placeholder:text-neutral-500 rounded-l-md"
         />
         {search && (
           <Button

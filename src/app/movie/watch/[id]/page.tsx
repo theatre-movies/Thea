@@ -66,7 +66,7 @@ const Page = () => {
   }, [server, id]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-black text-white px-12 py-12 space-y-16">
+    <div className="min-h-screen flex flex-col items-center bg-black text-white px-4 sm:px-8 lg:px-12 py-6 sm:py-8 lg:py-12 space-y-8 sm:space-y-12 lg:space-y-16">
       <div className="relative w-full pt-[56.25%]">
         {loading && (
           <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-70 z-10">
@@ -83,9 +83,9 @@ const Page = () => {
       </div>
 
       <div className="w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-8 mx-4 ">
+        <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-6 sm:gap-8 mx-0 sm:mx-2 lg:mx-4">
           {/* Movie Poster */}
-          <div className="flex flex-col justify-center lg:justify-start space-y-4 ">
+          <div className="flex flex-col justify-center lg:justify-start space-y-4">
             <div className="flex flex-col border border-neutral-800 rounded-md overflow-hidden">
               {movieDetails?.poster_path && (
                 <div className="relative w-full aspect-[2/3]">
@@ -93,7 +93,7 @@ const Page = () => {
                     src={`https://image.tmdb.org/t/p/original/${movieDetails?.poster_path}`}
                     alt="Movie Poster"
                     fill
-                    sizes="(max-width: 640px) 100vw, 640px"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover"
                     priority
                   />
@@ -101,9 +101,9 @@ const Page = () => {
                 </div>
               )}
               <div className="px-4 font-[550] flex flex-col space-y-1 text-neutral-300">
-                <h1>{movieDetails?.title}</h1>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">
+                <h1 className="text-base sm:text-lg">{movieDetails?.title}</h1>
+                <div className="flex items-center gap-2 text-xs sm:text-sm">
+                  <span>
                     {movieDetails?.release_date
                       ? new Date(movieDetails.release_date).toLocaleDateString(
                           "en-US",
@@ -116,7 +116,7 @@ const Page = () => {
                       : ""}
                   </span>
                   {movieDetails?.runtime && <span>•</span>}
-                  <span className="text-sm">
+                  <span>
                     {movieDetails?.runtime !== undefined
                       ? `${Math.floor(movieDetails.runtime / 60)}h ${
                           movieDetails.runtime % 60
@@ -124,11 +124,11 @@ const Page = () => {
                       : ""}
                   </span>
                 </div>
-                <div className="pb-4">
+                <div className="pb-4 flex flex-wrap gap-2">
                   {movieDetails?.genres?.map((genre: Genre) => (
                     <span
                       key={genre.id}
-                      className="text-xs border px-2 py-1 rounded-full border-neutral-600 bg-neutral-800/50 mr-2"
+                      className="text-xs border px-2 py-1 rounded-full border-neutral-600 bg-neutral-800/50"
                     >
                       {genre.name}
                     </span>
@@ -137,7 +137,7 @@ const Page = () => {
               </div>
             </div>
             <div className="border border-neutral-800 rounded-md w-full flex justify-center p-3">
-              <h1 className="text-neutral-400 italic text-lg    ">
+              <h1 className="text-neutral-400 italic text-sm sm:text-base lg:text-lg text-center">
                 {'"'}
                 {movieDetails?.tagline}
                 {'"'}
@@ -145,17 +145,17 @@ const Page = () => {
             </div>
           </div>
 
-          <div className=" w-full   flex flex-col space-y-4">
-            <div className="flex flex-col space-y-4 ">
-              <div className="border border-neutral-800 p-6 rounded-lg">
-                <div className="flex items-center gap-2 ">
-                  <ServerCog className="size-5 " />
+          <div className="w-full flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4">
+              <div className="border border-neutral-800 p-4 sm:p-6 rounded-lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <ServerCog className="size-4 sm:size-5" />
                   <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                  <h2 className="text-xl font-[550] tracking-tight">
+                  <h2 className="text-lg sm:text-xl font-[550] tracking-tight">
                     Streaming Servers
                   </h2>
                 </div>
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
                   {sources.map((source, idx) => (
                     <Button
                       key={source.name}
@@ -163,40 +163,41 @@ const Page = () => {
                         setServer(source.url(id));
                         setActive(idx);
                       }}
-                      variant={active === idx ? "default" : "outline"}
+                      variant={active === idx ? "secondary" : "default"}
+                      className="text-xs sm:text-sm  "
                     >
                       {source.name}
                     </Button>
                   ))}
                 </div>
               </div>
-              <div className="border border-neutral-800 rounded-md w-full  p-3 px-4 text-neutral-400">
+              <div className="border border-neutral-800 rounded-md w-full p-3 sm:p-4 px-4 text-neutral-400">
                 <div className="flex items-center gap-2 p-1">
-                  <MoveDiagonal className="size-5 mr-2 fill-neutral-200 stroke-none" />
-                  <h2 className="text-xl font-[550] tracking-tight mb-2 text-neutral-100">
+                  <MoveDiagonal className="size-4 sm:size-5 mr-2 fill-neutral-200 stroke-none" />
+                  <h2 className="text-lg sm:text-xl font-[550] tracking-tight mb-2 text-neutral-100">
                     Synopsis
                   </h2>
                 </div>
-                <p className="text-md tracking-tight ">
+                <p className="text-sm sm:text-base tracking-tight">
                   {movieDetails?.overview}
                 </p>
               </div>
-              <div className=" grid grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-10">
                 {/* Details Section */}
-                <div className="border border-neutral-800 p-6 rounded-lg">
-                  <div className="flex items-center gap-2 ">
-                    <ReceiptText className="size-5" />
-                    <h2 className="text-xl font-[550] tracking-tight">
+                <div className="border border-neutral-800 p-4 sm:p-6 rounded-lg">
+                  <div className="flex items-center gap-2 mb-4">
+                    <ReceiptText className="size-4 sm:size-5" />
+                    <h2 className="text-lg sm:text-xl font-[550] tracking-tight">
                       Details
                     </h2>
                   </div>
                   <div className="mt-4 space-y-2 text-neutral-300">
                     {movieDetails?.release_date && (
                       <div className="flex justify-between gap-2">
-                        <span className="text-neutral-400 text-sm">
+                        <span className="text-neutral-400 text-xs sm:text-sm">
                           Release Date
                         </span>
-                        <span className="text-sm font-bold text-neutral-300">
+                        <span className="text-xs sm:text-sm font-bold text-neutral-300 text-right">
                           {movieDetails?.release_date
                             ? new Date(
                                 movieDetails.release_date
@@ -211,12 +212,12 @@ const Page = () => {
                     )}
                     {movieDetails?.runtime && (
                       <div className="flex justify-between gap-2">
-                        <span className=" text-neutral-400 text-sm">
+                        <span className="text-neutral-400 text-xs sm:text-sm">
                           Runtime
                         </span>
-                        <span className="text-sm font-bold text-neutral-300">
+                        <span className="text-xs sm:text-sm font-bold text-neutral-300">
                           {movieDetails?.runtime ? (
-                            <span className="text-sm">
+                            <span>
                               {Math.floor(movieDetails?.runtime / 60)}h{" "}
                               {String(movieDetails?.runtime % 60).padStart(
                                 2,
@@ -233,10 +234,10 @@ const Page = () => {
 
                     {movieDetails?.original_language && (
                       <div className="flex justify-between gap-2">
-                        <span className="text-neutral-400 text-sm">
+                        <span className="text-neutral-400 text-xs sm:text-sm">
                           Language
                         </span>
-                        <span className="text-sm font-bold text-neutral-300">
+                        <span className="text-xs sm:text-sm font-bold text-neutral-300">
                           {movieDetails?.original_language?.toUpperCase() ||
                             "N/A"}
                         </span>
@@ -245,8 +246,10 @@ const Page = () => {
 
                     {movieDetails?.status && (
                       <div className="flex justify-between gap-2">
-                        <span className="text-neutral-400">Status</span>
-                        <span className="text-sm font-bold text-neutral-300">
+                        <span className="text-neutral-400 text-xs sm:text-sm">
+                          Status
+                        </span>
+                        <span className="text-xs sm:text-sm font-bold text-neutral-300">
                           {movieDetails?.status || "N/A"}
                         </span>
                       </div>
@@ -255,10 +258,10 @@ const Page = () => {
                     {movieDetails?.budget !== undefined &&
                       movieDetails.budget > 0 && (
                         <div className="flex justify-between gap-2">
-                          <span className="text-neutral-400 text-sm">
+                          <span className="text-neutral-400 text-xs sm:text-sm">
                             Budget
                           </span>
-                          <span className="text-sm font-bold text-neutral-300">
+                          <span className="text-xs sm:text-sm font-bold text-neutral-300 text-right">
                             {movieDetails?.budget
                               ? `$${movieDetails.budget.toLocaleString()}`
                               : "N/A"}
@@ -269,10 +272,10 @@ const Page = () => {
                     {movieDetails?.revenue !== undefined &&
                       movieDetails?.revenue > 0 && (
                         <div className="flex justify-between gap-2">
-                          <span className="text-neutral-400 text-sm">
+                          <span className="text-neutral-400 text-xs sm:text-sm">
                             Revenue
                           </span>
-                          <span className="text-sm font-bold text-neutral-300">
+                          <span className="text-xs sm:text-sm font-bold text-neutral-300 text-right">
                             {movieDetails?.revenue
                               ? `$${movieDetails.revenue.toLocaleString()}`
                               : "N/A"}
@@ -283,38 +286,42 @@ const Page = () => {
                 </div>
 
                 {/* Production Companies Section */}
-                <div className="border border-neutral-800 p-6 rounded-lg text-neutral-400 text-sm">
-                  <div className="flex items-center gap-2 ">
-                    <File className="size-5 text-neutral-100" />
-                    <h2 className="text-xl font-[550] tracking-tight text-neutral-100">
+                <div className="border border-neutral-800 p-4 sm:p-6 rounded-lg text-neutral-400">
+                  <div className="flex items-center gap-2 mb-4">
+                    <File className="size-4 sm:size-5 text-neutral-100" />
+                    <h2 className="text-lg sm:text-xl font-[550] tracking-tight text-neutral-100">
                       Production Companies
                     </h2>
                   </div>
-                  <div className="mt-4 space-y-2 text-neutral-300">
-                    <h1 className="text-neutral-400">Companies</h1>
-                    <div className="flex  gap-2">
+                  <div className="mt-4 space-y-3 sm:space-y-4 text-neutral-300">
+                    <h1 className="text-neutral-400 text-xs sm:text-sm">
+                      Companies
+                    </h1>
+                    <div className="flex flex-wrap gap-2">
                       {movieDetails?.production_companies &&
                         movieDetails?.production_companies.length > 0 &&
                         movieDetails?.production_companies.map(
                           (company: ProductionCompany) => (
                             <Badge
                               key={company.id}
-                              className="text-xs font-bold text-neutral-200 px-4 py-1"
+                              className="text-xs font-bold text-neutral-200 px-3 py-1"
                             >
                               {company.name}
                             </Badge>
                           )
                         )}
                     </div>
-                    <h1 className="pt-4 text-neutral-400">Countries</h1>
-                    <div className="flex  gap-2">
+                    <h1 className="pt-2 sm:pt-4 text-neutral-400 text-xs sm:text-sm">
+                      Countries
+                    </h1>
+                    <div className="flex flex-wrap gap-2">
                       {movieDetails?.production_countries &&
                         movieDetails?.production_countries.length > 0 &&
                         movieDetails?.production_countries.map(
                           (country: ProductionCountry) => (
                             <Badge
                               key={country.iso_3166_1}
-                              className="text-xs font-bold text-neutral-200 px-4 py-1"
+                              className="text-xs font-bold text-neutral-200 px-3 py-1"
                             >
                               {country.name}
                             </Badge>
@@ -322,20 +329,20 @@ const Page = () => {
                         )}
                     </div>
 
-                    <h1 className="text-neutral-400">Languages</h1>
-                    <div className="flex gap-2">
+                    <h1 className="text-neutral-400 text-xs sm:text-sm">
+                      Languages
+                    </h1>
+                    <div className="flex flex-wrap gap-2">
                       {movieDetails?.spoken_languages &&
                         movieDetails?.spoken_languages.length > 0 &&
                         movieDetails?.spoken_languages.map(
                           (language: SpokenLanguage, idx: number) => (
                             <span
                               key={language.iso_639_1}
-                              className="text-xs font-[550] text-neutral-300 "
+                              className="text-xs font-[550] text-neutral-300"
                             >
                               {language?.english_name}
-                              {idx <
-                                movieDetails?.spoken_languages.length - 1 &&
-                                ","}
+                              {movieDetails?.spoken_languages.length - 1 && ","}
                             </span>
                           )
                         )}
@@ -346,10 +353,10 @@ const Page = () => {
 
               {/* Recommendation Movies section */}
               {recommendedMovies && (
-                <div className="bg-black/40 backdrop-blur-sm rounded-lg p-2 border border-neutral-800 ">
-                  <div className="flex justify-start gap-2 px-4 items-center pt-8">
-                    <BookHeart className="size-5" />
-                    <h2 className="text-xl font-[550] tracking-tight text-neutral-100">
+                <div className="bg-black/40 backdrop-blur-sm rounded-lg p-2 border border-neutral-800">
+                  <div className="flex justify-start gap-2 px-4 items-center pt-4 sm:pt-6 lg:pt-8">
+                    <BookHeart className="size-4 sm:size-5" />
+                    <h2 className="text-lg sm:text-xl font-[550] tracking-tight text-neutral-100">
                       You may also like
                     </h2>
                   </div>

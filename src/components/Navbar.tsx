@@ -16,25 +16,25 @@ const bitCount = Sniglet({
   weight: "400",
 });
 export const Navbar = () => {
-  const navItems = [
-    {
-      title: "Movie",
-      href: "/Movie",
-      logo: <Film className="size-5 mt-1 text-neutral-100 z-10" />,
-    },
+  // const navItems = [
+  //   {
+  //     title: "Movie",
+  //     href: "/Movie",
+  //     logo: <Film className="size-5 mt-1 text-neutral-100 z-10" />,
+  //   },
 
-    {
-      title: "Tv Shows",
-      href: "/projects",
-      logo: <Tv className="size-5 mt-1 text-neutral-100 z-10" />,
-    },
+  //   {
+  //     title: "Tv Shows",
+  //     href: "/projects",
+  //     logo: <Tv className="size-5 mt-1 text-neutral-100 z-10" />,
+  //   },
 
-    {
-      title: "Categories",
-      href: "/categories",
-      logo: <Folder className="size-5 mt-1 text-neutral-100 z-10" />,
-    },
-  ];
+  //   {
+  //     title: "Categories",
+  //     href: "/categories",
+  //     logo: <Folder className="size-5 mt-1 text-neutral-100 z-10" />,
+  //   },
+  // ];
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -50,7 +50,7 @@ export const Navbar = () => {
             Thea
           </span>
         </Link>
-        <div className="flex items-center gap-x-2 ml-4">
+        {/* <div className="flex items-center gap-x-2 ml-4">
           {navItems.map((item, idx) => (
             <Link
               className="text-sm relative px-2 py-1"
@@ -73,7 +73,7 @@ export const Navbar = () => {
               </div>
             </Link>
           ))}
-        </div>
+        </div> */}
         <SearchInput />
       </div>
     </nav>

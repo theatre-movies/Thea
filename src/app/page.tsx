@@ -9,6 +9,7 @@ import { CirclePlay, LibraryBig, Loader2, TrendingUp } from "lucide-react";
 import getTrendingMovies from "./hooks/getTrendingMovies";
 import HeroSection from "@/components/HeroSection";
 import { Navbar } from "@/components/Navbar";
+import { PageLoadingSkeleton } from "@/lib/Skeleton";
 
 const Home = () => {
   const [nowPlayingMovies, setNowPlayingMovies] = useState<
@@ -49,11 +50,7 @@ const Home = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-neutral-400" />
-      </div>
-    );
+    return <PageLoadingSkeleton />;
   }
 
   return (
@@ -62,24 +59,25 @@ const Home = () => {
       <div className="w-full mt-12 ">
         <HeroSection movies={trendingMovies} />
       </div>
-
-      <div className="sm:mx-20">
-        <MoviesSection
-          movies={nowPlayingMovies}
-          title={"Now Playing"}
-          logo={<CirclePlay className="text-neutral-200 size-8 " />}
-        />
-        <MoviesSection
-          movies={topRatedMovies}
-          title={"Top Rated"}
-          logo={<LibraryBig className="text-neutral-200 size-8 " />}
-        />
-        <MoviesSection
-          movies={popularMovies}
-          title={"Popular Movies"}
-          logo={<TrendingUp className="text-neutral-200 size-8 " />}
-        />
-      </div>
+      {!loading && (
+        <div className="sm:mx-20">
+          <MoviesSection
+            movies={nowPlayingMovies}
+            title={"Now Playing"}
+            logo={<CirclePlay className="text-neutral-200 size-8 " />}
+          />
+          <MoviesSection
+            movies={topRatedMovies}
+            title={"Top Rated"}
+            logo={<LibraryBig className="text-neutral-200 size-8 " />}
+          />
+          <MoviesSection
+            movies={popularMovies}
+            title={"Popular Movies"}
+            logo={<TrendingUp className="text-neutral-200 size-8 " />}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -9,10 +9,12 @@ import getRecommendedMovies from "@/app/hooks/getRecommendeMovies";
 import getSImilarMovies from "@/app/hooks/getSimilarMovies";
 import MovieCastSection from "@/components/MovieCastSection";
 import MovieImages from "@/components/MovieImages";
+import { MovieProviders } from "@/components/MovieProviders";
 import MoviesSection from "@/components/MoviesSection";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import VideosAndTrailersSection from "@/components/VIdeosAndTrailersSection";
+import { MovieDetailSkeleton } from "@/lib/Skeleton";
 import { Calendar, Clock, Play, Puzzle, Star, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,16 +28,20 @@ const Page = () => {
   const [cast, setCast] = useState<MovieCredits | undefined>();
   const [images, setImages] = useState<Media | undefined>();
   const [videos, setVideos] = useState(null);
-  const [providers, setProviders] = useState(null);
+  const [providers, setProviders] = useState<
+    MovieProvidersResponse | undefined
+  >();
   const [similarMovies, setSimilarMovies] = useState<
     TMDBMoviesResponse | undefined
   >();
   const [recommendedMovies, setRecommendedMovies] = useState<
     TMDBMoviesResponse | undefined
   >();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
+      setLoading(true);
       try {
         // Fixed: Fetch movie details once
         const movieDetails = await getMovieDetails({ id: id as string });
@@ -70,6 +76,8 @@ const Page = () => {
         console.log(topLogo);
       } catch (error) {
         console.error("Error fetching movie data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -79,12 +87,8 @@ const Page = () => {
   }, [id]);
 
   // Loading state
-  if (!movieDetails) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    );
+  if (!movieDetails || loading || !videos) {
+    return <MovieDetailSkeleton />;
   }
 
   const topLogo =
@@ -97,10 +101,7 @@ const Page = () => {
   return (
     <div className="relative min-h-screen bg-black">
       <Navbar />
-      {/* Background Images */}
-      {/* <div className="fixed inset-0 z-0 bg-black">
-        <MovieImages images={images} />
-      </div> */}
+      {/* 
 
       {/* Background Images - Hero Section Only */}
       <div className="absolute inset-x-0 -top-4 z-0">
@@ -125,13 +126,13 @@ const Page = () => {
                 }}
               />
             )}
-            <Button
+            {/* <Button
               variant={"default"}
               className="h-10 w-[90%] flex justify-center sm:mx-0 mx-4 "
             >
               <Video className="size-5" />
               <p>Watch Trailer</p>
-            </Button>
+            </Button> */}
             <Link href={`/movie/watch/${id}`}>
               <Button
                 variant={"secondary"}
@@ -223,14 +224,7 @@ const Page = () => {
             )}
 
             {/* Where to Watch */}
-            <div className="pt-4">
-              <div className="flex items-center gap-2">
-                <Play className="size-6 fill-yellow-500 stroke-none" />
-                <h2 className="text-xl font-semibold text-neutral-200">
-                  Where to Watch
-                </h2>
-              </div>
-            </div>
+            <MovieProviders providers={providers} />
           </div>
         </div>
 
