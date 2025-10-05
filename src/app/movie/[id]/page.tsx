@@ -116,14 +116,20 @@ const Page = () => {
         {/* Hero Section */}
         <div className="grid grid-cols-1 lg:grid-cols-[25%_75%] gap-8 mx-4 lg:mx-10 pt-20 lg:pt-96 ">
           {/* Movie Poster */}
-          <div className="flex flex-col justify-center lg:justify-start space-y-4  pb-8 border-b-2 rounded-md sm:border-0 sm:pb-0 sm:rounded-none border-neutral-300">
+          <div className="flex flex-col justify-center lg:justify-start space-y-4  pb-8 border-b-2 rounded-md sm:border-0 sm:pb-0 sm:rounded-none border-neutral-300  ">
             {movieDetails?.poster_path && (
               <Image
                 src={`https://image.tmdb.org/t/p/original/${movieDetails.poster_path}`}
                 width={320}
                 height={450}
                 alt={"Movie Poster"}
-                className="rounded-lg border border-neutral-700 sm:mx-0 mx-9  "
+                className="rounded-lg border border-neutral-700 
+                  w-[95%] 
+             xs:w-[85%] 
+             md:w-[90%] 
+             sm:mx-8
+             mx-auto 
+                "
                 onError={(e) => {
                   console.error("Failed to load poster");
                   e.currentTarget.style.display = "none";
@@ -137,22 +143,10 @@ const Page = () => {
               <Video className="size-5" />
               <p>Watch Trailer</p>
             </Button> */}
-            {/* <Link href={`/movie/watch/${id}`}>
-              <Button
-                variant={"secondary"}
-                className="h-10 w-[90%] sm:mx-0 mx-4"
-                onClick={() => {
-                  setLoading(true);
-                }}
-              >
-                <Play className="size-5" />
-                <p>Watch Now</p>
-              </Button>
-            </Link> */}
             <Button
               onClick={handleWatchNow}
               disabled={isPending}
-              className="h-10 w-[90%] sm:mx-0 mx-4"
+              className="h-10 w-[90%] sm:ml-8 mx-4"
             >
               {isPending ? (
                 <>
