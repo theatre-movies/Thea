@@ -18,12 +18,14 @@ import { MovieDetailSkeleton } from "@/lib/Skeleton";
 import { Calendar, Clock, Play, Puzzle, Star, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState, useTransition } from "react";
 
 const Page = () => {
   const params = useParams();
   const id = params.id;
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [movieDetails, setMovieDetails] = useState<MovieDetails | undefined>();
   const [cast, setCast] = useState<MovieCredits | undefined>();
   const [images, setImages] = useState<Media | undefined>();
@@ -31,6 +33,7 @@ const Page = () => {
   const [providers, setProviders] = useState<
     MovieProvidersResponse | undefined
   >();
+
   const [similarMovies, setSimilarMovies] = useState<
     TMDBMoviesResponse | undefined
   >();
@@ -43,37 +46,31 @@ const Page = () => {
     const fetchMovieDetails = async () => {
       setLoading(true);
       try {
-        // Fixed: Fetch movie details once
-        const movieDetails = await getMovieDetails({ id: id as string });
+        const [
+          movieDetails,
+          fetchImages,
+          getCast,
+          fetchMovieProviders,
+          fetchMovieVideos,
+          getSimilarMovies,
+          fetchRecommendedMovies,
+        ] = await Promise.all([
+          getMovieDetails({ id: id as string }),
+          getMovieImages({ id: id as string }),
+          getMovieCast({ id: id as string }),
+          getMovieProviders({ id: id as string }),
+          getMovieVideos({ id: id as string }),
+          getSImilarMovies({ id: id as string }),
+          getRecommendedMovies({ id: id as string }),
+        ]);
+
         setMovieDetails(movieDetails);
-
-        // Fixed: Fetch images using correct hook
-        const fetchImages = await getMovieImages({ id: id as string });
         setImages(fetchImages);
-
-        // Fixed: Fetch cast using correct hook
-        const getCast = await getMovieCast({ id: id as string });
         setCast(getCast);
-
-        // Fixed: Use separate hooks for providers and videos
-        const fetchMovieProviders = await getMovieProviders({
-          id: id as string,
-        });
         setProviders(fetchMovieProviders);
-
-        const fetchMovieVideos = await getMovieVideos({ id: id as string });
         setVideos(fetchMovieVideos);
-
-        // Fixed: Fetch similar movies
-        const getSimilarMovies = await getSImilarMovies({ id: id as string });
         setSimilarMovies(getSimilarMovies);
-
-        const fetchRecommendedMovies = await getRecommendedMovies({
-          id: id as string,
-        });
         setRecommendedMovies(fetchRecommendedMovies);
-
-        console.log(topLogo);
       } catch (error) {
         console.error("Error fetching movie data:", error);
       } finally {
@@ -97,6 +94,13 @@ const Page = () => {
           .filter((logo) => logo.iso_639_1 === "en")
           .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0))[0]
       : null;
+
+  const handleWatchNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    startTransition(() => {
+      router.push(`/movie/watch/${id}`);
+    });
+  };
 
   return (
     <div className="relative min-h-screen bg-black">
@@ -133,15 +137,35 @@ const Page = () => {
               <Video className="size-5" />
               <p>Watch Trailer</p>
             </Button> */}
-            <Link href={`/movie/watch/${id}`}>
+            {/* <Link href={`/movie/watch/${id}`}>
               <Button
                 variant={"secondary"}
                 className="h-10 w-[90%] sm:mx-0 mx-4"
+                onClick={() => {
+                  setLoading(true);
+                }}
               >
                 <Play className="size-5" />
                 <p>Watch Now</p>
               </Button>
-            </Link>
+            </Link> */}
+            <Button
+              onClick={handleWatchNow}
+              disabled={isPending}
+              className="h-10 w-[90%] sm:mx-0 mx-4"
+            >
+              {isPending ? (
+                <>
+                  <div className="size-5 border-2 border-green-400 rounded-md ... animate-spin" />
+                  <p>Loading...</p>
+                </>
+              ) : (
+                <>
+                  <Play className="size-5" />
+                  <p>Watch Now</p>
+                </>
+              )}
+            </Button>
           </div>
 
           {/* Movie Details */}
