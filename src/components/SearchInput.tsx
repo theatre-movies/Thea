@@ -116,10 +116,20 @@ const SearchInput = () => {
                       }}
                     >
                       {movie?.poster_path ? (
-                        <Image
-                          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                          width={40}
-                          height={60}
+                        // <Image
+                        //   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                        //   width={40}
+                        //   height={60}
+                        //   alt={`${
+                        //     movie?.title || movie?.original_name || "Poster"
+                        //   } poster`}
+                        //   className="rounded"
+                        // />
+
+                        <img
+                          src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
+                          width="40"
+                          height="60"
                           alt={`${
                             movie?.title || movie?.original_name || "Poster"
                           } poster`}

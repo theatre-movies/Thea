@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "image.tmdb.org",
-        pathname: "/t/p/original/**", // Allows all paths under /t/p/ (e.g., /t/p/w500/, /t/p/original/)
+        pathname: "/t/p/**", // Allows all paths under /t/p/ (e.g., /t/p/w500/, /t/p/original/)
       },
     ],
   },
