@@ -86,7 +86,7 @@ const SearchInput = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto rounded-md border border-neutral-700 bg-neutral-950 p-2 shadow-lg z-50"
+            className="absolute top-full mt-2 w-full max-h-60 overflow-y-auto rounded-md border border-neutral-700 bg-neutral-950 p-2 shadow-lg z-50 search-scrollbar"
           >
             {results.length === 0 ? (
               <motion.div

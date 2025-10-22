@@ -125,3 +125,23 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .search-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .search-scrollbar::-webkit-scrollbar-track {
+    @apply bg-neutral-900 rounded-md;
+  }
+
+  .search-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-neutral-700 rounded-md hover:bg-neutral-600;
+  }
+
+  /* Firefox */
+  .search-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #404040 #171717;
+  }
+}

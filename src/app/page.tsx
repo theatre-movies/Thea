@@ -5,50 +5,56 @@ import MoviesSection from "@/components/MoviesSection";
 import getNowPlayingMovies from "./hooks/getNowPlayingMovies";
 import getPopularMovies from "./hooks/getPopularMovies";
 import getTopRatedMovies from "./hooks/getTopRatedMovies";
-import { CirclePlay, Flag, LibraryBig, TrendingUp } from "lucide-react";
+import {
+  CirclePlay,
+  LibraryBig,
+  Loader2,
+  TrendingUp,
+  Flag,
+  Sparkles,
+} from "lucide-react";
 import getTrendingMovies from "./hooks/getTrendingMovies";
+import getTrendingIndianMovies from "./hooks/getTrendingIndianMovies";
+import getNowPlayingHindiMovies from "./hooks/getNowPlayingHindiMovies";
 import HeroSection from "@/components/HeroSection";
 import { Navbar } from "@/components/Navbar";
 import { PageLoadingSkeleton } from "@/lib/Skeleton";
-import getTrendingIndianMovies from "./hooks/getTrendingIndianMovies";
 
 const Home = () => {
-  const [nowPlayingMovies, setNowPlayingMovies] = useState<
-    TMDBMoviesResponse | undefined
-  >();
-  const [popularMovies, setPopularMovies] = useState<
-    TMDBMoviesResponse | undefined
-  >();
-  const [topRatedMovies, setTopRatedMovies] = useState<
-    TMDBMoviesResponse | undefined
-  >();
-  const [trendingMovies, setTrendingMovies] = useState<
-    MediaResponse | undefined
-  >();
-  const [trendingIndianMovies, setTrendingIndianMovies] = useState<
-    TMDBMoviesResponse | undefined
-  >();
-
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<TMDBMoviesResponse | undefined>();
+  const [popularMovies, setPopularMovies] = useState<TMDBMoviesResponse | undefined>();
+  const [topRatedMovies, setTopRatedMovies] = useState<TMDBMoviesResponse | undefined>();
+  const [trendingMovies, setTrendingMovies] = useState<MediaResponse | undefined>();
+  const [trendingIndianMovies, setTrendingIndianMovies] = useState<TMDBMoviesResponse | undefined>();
+  const [nowPlayingHindiMovies, setNowPlayingHindiMovies] = useState<TMDBMoviesResponse | undefined>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
       try {
-        const [nowPlaying, popular, topRated, trending, trendingIndian] =
-          await Promise.all([
-            getNowPlayingMovies(),
-            getPopularMovies(),
-            getTopRatedMovies(),
-            getTrendingMovies(),
-            getTrendingIndianMovies(),
-          ]);
+        const [
+          nowPlaying,
+          popular,
+          topRated,
+          trending,
+          trendingIndian,
+          nowPlayingHindi,
+        ] = await Promise.all([
+          getNowPlayingMovies(),
+          getPopularMovies(),
+          getTopRatedMovies(),
+          getTrendingMovies(),
+          getTrendingIndianMovies(),
+          getNowPlayingHindiMovies(),
+        ]);
 
         setNowPlayingMovies(nowPlaying);
         setPopularMovies(popular);
         setTopRatedMovies(topRated);
         setTrendingMovies(trending);
         setTrendingIndianMovies(trendingIndian);
+        setNowPlayingHindiMovies(nowPlayingHindi);
       } finally {
         setLoading(false);
       }
@@ -72,6 +78,11 @@ const Home = () => {
             movies={nowPlayingMovies}
             title={"Now Playing"}
             logo={<CirclePlay className="text-neutral-200 size-8 " />}
+          />
+          <MoviesSection
+            movies={nowPlayingHindiMovies}
+            title={"Now Playing Hindi Movies"}
+            logo={<Sparkles className="text-neutral-200 size-8 " />}
           />
           <MoviesSection
             movies={topRatedMovies}
