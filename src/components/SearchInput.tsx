@@ -8,13 +8,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-type Movie = {
-  poster_path?: string | null;
-  title?: string | null;
-  original_name?: string | null;
-  release_date?: string | null;
-};
-
 const MIN_CHARS = 2;
 const DEBOUNCE_MS = 350;
 
@@ -73,7 +66,7 @@ const SearchInput = () => {
           onFocus={() => setShowResults(true)}
           onKeyDown={(e) => e.key === "Escape" && setShowResults(false)}
           placeholder="Find your sauce"
-          className="flex-1 outline-0 sm:p-2  p-1 px-3 sm:text-sm text-xs bg-neutral-950 text-neutral-200 placeholder:text-neutral-500 rounded-l-md"
+          className="flex-1 outline-0 sm:p-2 sm:px-5  p-1 px-3 sm:text-sm text-xs bg-neutral-950 text-neutral-200 placeholder:text-neutral-500 rounded-l-md"
         />
         {search && (
           <Button
@@ -124,7 +117,7 @@ const SearchInput = () => {
                     >
                       {movie?.poster_path ? (
                         <Image
-                          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                           width={40}
                           height={60}
                           alt={`${

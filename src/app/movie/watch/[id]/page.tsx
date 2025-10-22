@@ -337,13 +337,12 @@ const Page = () => {
                         movieDetails?.spoken_languages.length > 0 &&
                         movieDetails?.spoken_languages.map(
                           (language: SpokenLanguage, idx: number) => (
-                            <span
+                            <Badge
                               key={language.iso_639_1}
-                              className="text-xs font-[550] text-neutral-300"
+                              className="text-xs font-bold text-neutral-200 px-3 py-1"
                             >
                               {language?.english_name}
-                              {movieDetails?.spoken_languages.length - 1 && ","}
-                            </span>
+                            </Badge>
                           )
                         )}
                     </div>
